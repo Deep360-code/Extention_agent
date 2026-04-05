@@ -1,0 +1,42 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")   
+}
+
+generator client {
+  provider             = "prisma-client-py"
+  recursive_type_depth = 5
+}
+
+model User {
+  id            String                 @id @default(uuid())
+  email         String                 @unique
+  password_hash String
+  created_at    DateTime               @default(now())
+  plan_type     String                 @default("free")
+
+  usages        API_Usage[]
+  connections   Extension_Connections[]
+}
+
+model API_Usage {
+  id            String   @id @default(uuid())
+  user_id       String
+  request_count Int      @default(0)
+  tokens_used   Int      @default(0)
+  date          DateTime @default(dbgenerated("CURRENT_DATE")) @db.Date
+  created_at    DateTime @default(now())
+  
+  user          User     @relation(fields: [user_id], references: [id])
+  
+  @@unique([user_id, date])
+}
+
+model Extension_Connections {
+  id           String   @id @default(uuid())
+  user_id      String
+  extension_id String
+  created_at   DateTime @default(now())
+  
+  user         User     @relation(fields: [user_id], references: [id])
+}

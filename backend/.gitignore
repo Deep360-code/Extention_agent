@@ -1,0 +1,15 @@
+node_modules/
+.env
+/generated/prisma
+venv/
+__pycache__/
+.gemini/
+*.pyc
+backend/.env
+backend/agent/.env
+
+# .gitignore
+venv/
+__pycache__/
+*.pyc
+.env

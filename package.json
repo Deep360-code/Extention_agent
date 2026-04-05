@@ -1,0 +1,17 @@
+{
+  "name": "extention_agent",
+  "version": "1.0.0",
+  "description": "An intelligent browser assistant with multi-step reasoning, powered by LangGraph, FastAPI, and Google Gemini.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@prisma/config": "^7.6.0",
+    "dotenv": "^17.3.1"
+  }
+}
