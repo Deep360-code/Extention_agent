@@ -1,4 +1,4 @@
-# Agentic AI Chrome Extension
+#  Deepankar's Agentic AI Chrome Extension
 
 An intelligent browser assistant with multi-step reasoning, upgraded to a production-ready SaaS backend powered by FastAPI, PostgreSQL, Prisma, and Groq LLMs.
 
