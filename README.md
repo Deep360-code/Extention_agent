@@ -1,14 +1,14 @@
 # Agentic AI Chrome Extension
 
-An intelligent browser assistant with multi-step reasoning, powered by LangGraph, FastAPI, and Google Gemini.
+An intelligent browser assistant with multi-step reasoning, upgraded to a production-ready SaaS backend powered by FastAPI, PostgreSQL, Prisma, and Groq LLMs.
 
 ## 🚀 Features
 
--   **Multi-Step Reasoning**: Uses LangGraph to plan, execute tools, and reflect on results.
--   **Agent Modes**: Research Assistant, Job Analyzer, Content Simplifier, Learning Mode, Autonomous Planner.
--   **Streaming Responses**: Real-time token streaming via Server-Sent Events (SSE).
--   **Tools**: Web Search, Wikipedia, PDF Reader, YouTube Transcript, Vector Memory.
--   **Memory**: Short-term conversation history and long-term vector storage (FAISS).
+-   **SaaS Authentication**: Fully secure JWT Access and Refresh token flows with safe password hashing.
+-   **Database Layer**: PostgreSQL integration managed natively by Prisma Client Python for users and extensions.
+-   **LLM Upgrade**: Swapped Gemini for the ultra-fast Groq API (default `llama-3.1-8b-instant`).
+-   **Usage Tracking & Rate Limiting**: Built-in usage metrics tracking requests and consumed tokens, with automatic rate-limiting on the Free tier.
+-   **Multi-Step Reasoning**: Uses advanced Agentic planning to interact with tools like Web Search, Wikipedia, and PDFs.
 
 ## 🛠️ Setup
 
@@ -16,29 +16,31 @@ An intelligent browser assistant with multi-step reasoning, powered by LangGraph
 
 -   Python 3.10+
 -   Google Chrome
--   Google Gemini API Key
--   (Optional) Tavily API Key for search
+-   PostgreSQL Server (Local or Neon/Supabase)
+-   Groq API Key (`GROQ_API_KEY`)
 
 ### Backend Setup
 
-1.  Navigate to the backend directory:
+1.  Install dependencies:
     ```bash
-    cd backend
+    pip install -r backend/requirements.txt
     ```
-2.  Install dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
-3.  Create a `.env` file in `backend/` and add your keys:
+2.  Set up your `.env` configuration file in the root configuration:
     ```env
-    GOOGLE_API_KEY=your_gemini_key
-    TAVILY_API_KEY=your_tavily_key # Optional
+    DATABASE_URL="postgresql://user:password@localhost:5432/saas_db"
+    GROQ_API_KEY="your_groq_api_key"
+    JWT_SECRET="your_secure_string_here"
     ```
-4.  Start the server:
+3.  Initialize and push the Prisma Database schema:
     ```bash
-    uvicorn main:app --reload
+    prisma generate --schema=backend/prisma/schema.prisma
+    prisma db push --schema=backend/prisma/schema.prisma
     ```
-    The server will run at `http://localhost:8000`.
+4.  Start the FastAPI server:
+    ```bash
+    uvicorn backend.main:app --reload
+    ```
+    The server API will run at `http://localhost:8000` (Visit `http://localhost:8000/docs` to see Swagger).
 
 ### Extension Setup
 
